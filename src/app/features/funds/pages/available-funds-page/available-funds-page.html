@@ -1,1 +1,46 @@
-<p>available-funds-page works!</p>,
+<h4>Available funds</h4>
+<h4>Initial Balance: {{ balance() }}</h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fund Name</th>
+      <th>Minimum Amount</th>
+      <th>Category</th>
+      <th>Subscribe</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (fund of availableFunds(); track fund.id) {
+      <tr>
+        <td>{{ fund.id }}</td>
+        <td>{{ fund.name }}</td>
+        <td>{{ fund.minAmount }}</td>
+        <td>{{ fund.category }}</td>
+        <td>
+          <!-- @if (checkSubscription(fund.id) === 'Subscribe') {
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#subscribeModal"
+              (click)="selectFund(fund)"
+            >
+              {{ checkSubscription(fund.id) }}
+            </button>
+          } @else {
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#cancelModal"
+              (click)="selectFund(fund)"
+            >
+              {{ checkSubscription(fund.id) }}
+            </button>
+          } -->
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

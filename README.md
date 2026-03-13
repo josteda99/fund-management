@@ -6,7 +6,7 @@ Requirements:
 * cancel participation and check new balance ✅
 * watch a list or table transaction history (subs and cancels)✅
 * show proper errors if no enoght funds
-* simulate fund movements
+* simulate fund movements (innesesary)
 * save in fake DB (localStorage)
 
 

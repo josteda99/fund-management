@@ -1,0 +1,31 @@
+<h4>Fund transactions</h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fund Name</th>
+      <th>Amount</th>
+      <th>Transaction Date</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (ft of fundsTransaction(); track ft.id) {
+      <tr>
+        <td>{{ ft.id }}</td>
+        <td>{{ ft.fundName }}</td>
+        <td>{{ ft.amount }}</td>
+        <td>{{ ft.transactionDate }}</td>
+        <td>{{ ft.type }}</td>
+      </tr>
+    } @empty {
+      <tr>
+        <td>No transactions</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    }
+  </tbody>
+</table>

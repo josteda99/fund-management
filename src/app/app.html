@@ -1,80 +1,13 @@
 <h1>Fund Management</h1>
-<!-- <router-outlet></router-outlet> -->
-
-<h4>Initial Balance: {{ initialBalance() }}</h4>
-
-<h4>Available funds</h4>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Fund Name</th>
-      <th>Minimum Amount</th>
-      <th>Category</th>
-      <th>Subscribe</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (fund of availableFunds(); track fund.id) {
-      <tr>
-        <td>{{ fund.id }}</td>
-        <td>{{ fund.name }}</td>
-        <td>{{ fund.minAmount }}</td>
-        <td>{{ fund.category }}</td>
-        <td>
-          @if (checkSubscription(fund.id) === 'Subscribe') {
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#subscribeModal"
-              (click)="selectFund(fund)"
-            >
-              {{ checkSubscription(fund.id) }}
-            </button>
-          } @else {
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#cancelModal"
-              (click)="selectFund(fund)"
-            >
-              {{ checkSubscription(fund.id) }}
-            </button>
-          }
-        </td>
-      </tr>
-    }
-  </tbody>
-</table>
-
-<h4>Fund transactions</h4>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Fund Name</th>
-      <th>Amount</th>
-      <th>Transaction Date</th>
-      <th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (ft of fundTransactions(); track ft.id) {
-      <tr>
-        <td>{{ ft.id }}</td>
-        <td>{{ ft.fundName }}</td>
-        <td>{{ ft.amount }}</td>
-        <td>{{ ft.transactionDate }}</td>
-        <td>{{ ft.type }}</td>
-      </tr>
-    }
-  </tbody>
-</table>
+<button type="button" routerLink="/dashboard" class="btn btn-primary">dashboard</button>
+<button type="button" routerLink="/available-funds" class="btn btn-primary">Available funds</button>
+<button type="button" routerLink="/transaction-history" class="btn btn-primary">
+  Transactions
+</button>
+<router-outlet></router-outlet>
 
 <!-- Subscribe -->
-<div
+<!-- <div
   class="modal fade"
   id="subscribeModal"
   tabindex="-1"
@@ -136,4 +69,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
