@@ -1,2 +1,79 @@
 <h1>Fund Management</h1>
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
+
+<h4>Initial Balance: {{ initialBalance() }}</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fund Name</th>
+      <th>Minimum Amount</th>
+      <th>Category</th>
+      <th>Subscribe</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (fund of availableFunds(); track fund.id) {
+      <tr>
+        <td>{{ fund.id }}</td>
+        <td>{{ fund.name }}</td>
+        <td>{{ fund.minAmount }}</td>
+        <td>{{ fund.category }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModalCenter"
+            (click)="selectFund(fund)"
+          >
+            Subscribe
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Subscribe to Fund</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        fund {{ selectedFund()?.name }}
+
+        <h3>How do you want to be notified</h3>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="changeNotificationPreference('email')"
+        >
+          Email
+        </button>
+        <button type="button" class="btn btn-primary" (click)="changeNotificationPreference('SMS')">
+          SMS
+        </button>
+
+        <p>Notification preference: {{ notificationPreference() }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="subscribeToFund()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
