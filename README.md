@@ -1,4 +1,15 @@
-Requirements:
+# Prueba tecnica - Devs Front end Angular
+
+Instrucciones:
+
+1. Clonar repositorio
+2. Entrar a la consola y correr el siguiente comando: ```npm i```
+3. Una vez finalizado, correr este comando para iniciar el proyecto: ```ng serve -o```
+4. Abre tu navegador y accede a: http://localhost:4200
+
+---
+
+### Requirements:
 
 * table with avaiable funds✅
 * option to subscribe to a fund if min mont ✅ 
@@ -7,7 +18,7 @@ Requirements:
 * watch a list or table transaction history (subs and cancels)✅
 * show proper errors if no enoght funds✅
 
-to have in account:
+### to have in account:
 
 * angular✅
 * state✅
@@ -15,15 +26,16 @@ to have in account:
 * responsive an clare ✅
 * errors✅ - and feedfack✅
 * loading✅
-* clean code and comented 
+* clean code and comented ✅
 * unit testing
 * navigation✅
 * components✅
-* internationalization🤔
 
 
-to send:
+### to send:
 
-* repo
-* instruction in readme
-* video
+* repo✅
+* instruction in readme✅
+* video (tomorrow 🤔)
+
+
