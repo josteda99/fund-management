@@ -19,11 +19,13 @@
               <td>{{ ft.fundName }}</td>
               <td>{{ ft.amount | currency: 'COP' }}</td>
               <td>{{ ft.transactionDate | date: 'dd/MM/yyyy hh:mm' }}</td>
-              <td>{{ ft.type }}</td>
+              <td>
+                <span class="badge bg-info">{{ ft.type }}</span>
+              </td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="6" class="text-center">No Transactions yet</td>
+              <td colspan="6" class="text-center">No transaction yet</td>
             </tr>
           }
         </tbody>

@@ -29,7 +29,9 @@
                 <td>{{ fund.name }}</td>
                 <td>
                   {{ fund.amount | currency: 'COP' }}
-                  ({{ formatReturnRate(fund.returnRate) }})
+                  <span [class]="fund.returnRate >= 0 ? 'text-success' : 'text-danger'"
+                    >({{ formatReturnRate(fund.returnRate) }})</span
+                  >
                 </td>
                 <td>{{ fund.category }}</td>
                 <td>{{ fund.notificationPreference }}</td>
