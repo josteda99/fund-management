@@ -32,9 +32,10 @@ export const FundStore = signalStore(
   withState(initialState),
   withComputed(({ user }) => ({
     userBalance: computed(() => user()?.balance),
-    investedAmount: computed(() =>
-      user()?.subscribedFunds.reduce((acc, fund) => (acc += fund.amount), 0),
+    investedAmount: computed(
+      () => user()?.subscribedFunds.reduce((acc, fund) => (acc += fund.amount), 0) ?? 0,
     ),
+    subscribedFunds: computed(() => user()?.subscribedFunds ?? []),
   })),
   withProps(() => ({
     fundService: inject(FundManagementService),

@@ -6,7 +6,54 @@
       <p class="m-0">Available Balance: {{ user()?.balance | currency: 'COP' }}</p>
       <p>Invested Amount: {{ investedAmount() | currency: 'COP' }}</p>
 
-      <!-- reuse table -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fund Name</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Notification</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (fund of subscribedFunds(); track fund.id) {
+            <tr>
+              <td>{{ fund.id }}</td>
+              <td>{{ fund.name }}</td>
+              <td>{{ fund.amount | currency: 'COP' }} ({{ formatReturnRate(fund.returnRate) }})</td>
+              <td>{{ fund.category }}</td>
+              <td>{{ fund.notificationPreference }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#cancelModal"
+                  (click)="selectFund(fund)"
+                >
+                  Cancel
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td>No Fund yet</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          }
+        </tbody>
+      </table>
     </div>
   </div>
 }
+
+<app-cancel-dialog
+  [fundName]="selectedFund()?.name ?? ''"
+  (cancelFund)="cancelFund()"
+></app-cancel-dialog>

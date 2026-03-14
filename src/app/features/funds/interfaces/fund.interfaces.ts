@@ -16,6 +16,7 @@ export interface User {
 export interface SubscribedFund extends Fund {
   amount: number;
   notificationPreference: NotificationPreference;
+  returnRate: number;
 }
 
 export interface SubscribedFundDto {

@@ -54,11 +54,16 @@ export class FundManagementService {
     const fund = this.initialAvailableFund().find((f) => f.id === fundId);
 
     if (!fund) throw new Error('Fund doesnt finded');
+    const returnRate = this.generateRandomReturnRate();
+    const adjustedAmount = Number((fund.minAmount * (1 + returnRate)).toFixed(2));
+
     const subscribedFund: SubscribedFund = {
       ...fund,
-      amount: fund.minAmount,
+      amount: adjustedAmount,
       notificationPreference,
+      returnRate: returnRate,
     };
+    //take a llok this logic
     this.user.update((u) => ({
       ...u,
       balance: u.balance - fund.minAmount,
@@ -98,5 +103,14 @@ export class FundManagementService {
       type: type,
     };
     this.transactions.update((ft) => [...ft, fundTransaction]);
+  }
+
+  //limits
+  /*
+  -0.05  → -5%
+  +0.10  → +10%
+  */
+  private generateRandomReturnRate(): number {
+    return Math.random() * 0.15 - 0.05;
   }
 }

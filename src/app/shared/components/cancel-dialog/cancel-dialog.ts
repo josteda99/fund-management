@@ -8,7 +8,6 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 })
 export class CancelDialog {
   public fundName = input.required<string>();
-
   public cancelFund = output<void>();
 
   public onCancelFund() {
