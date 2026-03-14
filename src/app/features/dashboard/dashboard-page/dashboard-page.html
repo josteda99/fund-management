@@ -1,12 +1,21 @@
 @if (user()) {
   <div class="card">
     <div class="card-body">
-      <h4 class="mb-3">Hello, {{ user()?.name }}</h4>
+      <div class="d-flex justify-content-between">
+        <div>
+          <h4 class="mb-3">Hello, {{ user()?.name }}</h4>
 
-      <div class="mb-3">
-        <h5>Total Balance: {{ totalAmount() | currency: 'COP' }}</h5>
-        <p class="m-0">Available Balance: {{ user()?.balance | currency: 'COP' }}</p>
-        <p class="m-0">Invested Amount: {{ investedAmount() | currency: 'COP' }}</p>
+          <div class="mb-3">
+            <h5>Total Balance: {{ totalAmount() | currency: 'COP' }}</h5>
+            <p class="m-0">Available Balance: {{ user()?.balance | currency: 'COP' }}</p>
+            <p class="m-0">Invested Amount: {{ investedAmount() | currency: 'COP' }}</p>
+          </div>
+        </div>
+        <div>
+          <button type="button" class="btn btn-primary" routerLink="/transaction-history">
+            Check Transaction History
+          </button>
+        </div>
       </div>
 
       <div class="table-responsive">

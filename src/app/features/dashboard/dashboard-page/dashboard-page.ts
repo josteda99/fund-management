@@ -3,10 +3,11 @@ import { FundStore } from '../../funds/state/fund.store';
 import { CommonModule } from '@angular/common';
 import { SubscribedFund } from '../../funds/interfaces/fund.interfaces';
 import { CancelDialog } from '../../../shared/components/cancel-dialog/cancel-dialog';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [CommonModule, CancelDialog],
+  imports: [CommonModule, CancelDialog, RouterLink],
   templateUrl: './dashboard-page.html',
   providers: [FundStore],
   changeDetection: ChangeDetectionStrategy.OnPush,
