@@ -29,3 +29,8 @@ export enum NotificationPreference {
   EMAIL = 'EMAIL',
   NONE = 'NONE',
 }
+
+export interface FundIdNotificationPreference {
+  fundId: number;
+  notificationPreference: NotificationPreference;
+}

@@ -1,54 +1,58 @@
 @if (user()) {
   <div class="card">
     <div class="card-body">
-      <h4>Hello, {{ user()?.name }}</h4>
-      <h5>Total Balance: {{ totalAmount() | currency: 'COP' }}</h5>
-      <p class="m-0">Available Balance: {{ user()?.balance | currency: 'COP' }}</p>
-      <p>Invested Amount: {{ investedAmount() | currency: 'COP' }}</p>
+      <h4 class="mb-3">Hello, {{ user()?.name }}</h4>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Fund Name</th>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Notification</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (fund of subscribedFunds(); track fund.id) {
+      <div class="mb-3">
+        <h5>Total Balance: {{ totalAmount() | currency: 'COP' }}</h5>
+        <p class="m-0">Available Balance: {{ user()?.balance | currency: 'COP' }}</p>
+        <p class="m-0">Invested Amount: {{ investedAmount() | currency: 'COP' }}</p>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped align-middle">
+          <thead class="table-light">
             <tr>
-              <td>{{ fund.id }}</td>
-              <td>{{ fund.name }}</td>
-              <td>{{ fund.amount | currency: 'COP' }} ({{ formatReturnRate(fund.returnRate) }})</td>
-              <td>{{ fund.category }}</td>
-              <td>{{ fund.notificationPreference }}</td>
-              <td>
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-toggle="modal"
-                  data-bs-target="#cancelModal"
-                  (click)="selectFund(fund)"
-                >
-                  Cancel
-                </button>
-              </td>
+              <th>ID</th>
+              <th>Fund Name</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Notification</th>
+              <th>Action</th>
             </tr>
-          } @empty {
-            <tr>
-              <td>No Fund yet</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          }
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            @for (fund of subscribedFunds(); track fund.id) {
+              <tr>
+                <td>{{ fund.id }}</td>
+                <td>{{ fund.name }}</td>
+                <td>
+                  {{ fund.amount | currency: 'COP' }}
+                  ({{ formatReturnRate(fund.returnRate) }})
+                </td>
+                <td>{{ fund.category }}</td>
+                <td>{{ fund.notificationPreference }}</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#cancelModal"
+                    (click)="selectFund(fund)"
+                  >
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="6" class="text-center">No funds yet</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 }

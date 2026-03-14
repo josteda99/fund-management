@@ -6,7 +6,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { Fund, User } from '../interfaces/fund.interfaces';
+import { Fund, FundIdNotificationPreference, User } from '../interfaces/fund.interfaces';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
 import { computed, inject } from '@angular/core';
@@ -79,12 +79,11 @@ export const FundStore = signalStore(
         }),
       ),
     ),
-    //fix this
-    subscribeFund: rxMethod<number>(
+    subscribeFund: rxMethod<FundIdNotificationPreference>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
-        switchMap((fundId) => {
-          return store.fundService.subscribeFund(fundId).pipe(
+        switchMap(({ fundId, notificationPreference }) => {
+          return store.fundService.subscribeFund(fundId, notificationPreference).pipe(
             tapResponse({
               next: ({ subscribedFund, balance }) =>
                 patchState(store, (state) => {

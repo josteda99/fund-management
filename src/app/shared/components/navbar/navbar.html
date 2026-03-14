@@ -1,13 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
   <span class="navbar-brand text-white">Fund Management</span>
 
-  <div class="navbar-nav">
-    <a routerLink="/dashboard" routerLinkActive="underline" class="nav-link">Dashboard</a>
-    <a routerLink="/available-funds" routerLinkActive="underline" class="nav-link text-white"
-      >Available Funds</a
-    >
-    <a routerLink="/transaction-history" routerLinkActive="underline" class="nav-link text-white"
-      >Transactions</a
-    >
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarNav"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="navbar-nav ms-auto">
+      <a routerLink="/dashboard" class="nav-link text-white"> Dashboard </a>
+      <a routerLink="/available-funds" class="nav-link text-white"> Available Funds </a>
+      <a routerLink="/transaction-history" class="nav-link text-white"> Transactions </a>
+    </div>
   </div>
 </nav>

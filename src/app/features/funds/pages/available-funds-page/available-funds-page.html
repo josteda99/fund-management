@@ -2,42 +2,46 @@
   <div class="card-body">
     <h5 class="card-title">Available funds</h5>
     <h6 class="card-subtitle mb-2 text-muted">Your Balance: {{ balance() | currency }}</h6>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Fund Name</th>
-          <th>Minimum Amount</th>
-          <th>Category</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (fund of availableFunds(); track fund.id) {
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-light">
           <tr>
-            <td>{{ fund.id }}</td>
-            <td>{{ fund.name }}</td>
-            <td>{{ fund.minAmount | currency: 'COP' }}</td>
-            <td>{{ fund.category }}</td>
-            <td>
-              <button
-                type="button"
-                [class]="
-                  checkSubscription(fund.id) === 'Subscribe' ? 'btn btn-primary' : 'btn btn-danger'
-                "
-                data-bs-toggle="modal"
-                [attr.data-bs-target]="
-                  checkSubscription(fund.id) === 'Subscribe' ? '#subscribeModal' : '#cancelModal'
-                "
-                (click)="selectFund(fund)"
-              >
-                {{ checkSubscription(fund.id) }}
-              </button>
-            </td>
+            <th>ID</th>
+            <th>Fund Name</th>
+            <th>Minimum Amount</th>
+            <th>Category</th>
+            <th>Action</th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (fund of availableFunds(); track fund.id) {
+            <tr>
+              <td>{{ fund.id }}</td>
+              <td>{{ fund.name }}</td>
+              <td>{{ fund.minAmount | currency: 'COP' }}</td>
+              <td>{{ fund.category }}</td>
+              <td>
+                <button
+                  type="button"
+                  [class]="
+                    checkSubscription(fund.id) === 'Subscribe'
+                      ? 'btn btn-primary'
+                      : 'btn btn-danger'
+                  "
+                  data-bs-toggle="modal"
+                  [attr.data-bs-target]="
+                    checkSubscription(fund.id) === 'Subscribe' ? '#subscribeModal' : '#cancelModal'
+                  "
+                  (click)="selectFund(fund)"
+                >
+                  {{ checkSubscription(fund.id) }}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

@@ -45,7 +45,10 @@ export class AvailableFundsPage implements OnInit {
       this.messageService.showMessage(`Not enough balance to subscribe to ${fund.name}`, 'danger');
       return;
     }
-    this.fundStore.subscribeFund(fund.id);
+    this.fundStore.subscribeFund({
+      fundId: fund.id,
+      notificationPreference: this.notificationPreference(),
+    });
   }
 
   public selectFund(fund: Fund) {

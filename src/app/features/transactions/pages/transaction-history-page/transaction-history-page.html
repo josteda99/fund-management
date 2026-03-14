@@ -1,35 +1,33 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Fund transactions</h5>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Fund Name</th>
-          <th>Amount</th>
-          <th>Transaction Date</th>
-          <th>Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (ft of fundsTransaction(); track ft.id) {
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-light">
           <tr>
-            <td>{{ ft.id }}</td>
-            <td>{{ ft.fundName }}</td>
-            <td>{{ ft.amount | currency: 'COP' }}</td>
-            <td>{{ ft.transactionDate | date: 'dd/MM/yyyy hh:mm' }}</td>
-            <td>{{ ft.type }}</td>
+            <th>ID</th>
+            <th>Fund Name</th>
+            <th>Amount</th>
+            <th>Transaction Date</th>
+            <th>Type</th>
           </tr>
-        } @empty {
-          <tr>
-            <td>No transactions</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @for (ft of fundsTransaction(); track ft.id) {
+            <tr>
+              <td>{{ ft.id }}</td>
+              <td>{{ ft.fundName }}</td>
+              <td>{{ ft.amount | currency: 'COP' }}</td>
+              <td>{{ ft.transactionDate | date: 'dd/MM/yyyy hh:mm' }}</td>
+              <td>{{ ft.type }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="text-center">No Transactions yet</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

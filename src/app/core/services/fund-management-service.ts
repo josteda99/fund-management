@@ -63,7 +63,7 @@ export class FundManagementService {
       notificationPreference,
       returnRate: returnRate,
     };
-    //take a llok this logic
+    //take a look this logic
     this.user.update((u) => ({
       ...u,
       balance: u.balance - fund.minAmount,
