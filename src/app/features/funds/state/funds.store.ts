@@ -12,6 +12,7 @@ import { pipe, switchMap, tap } from 'rxjs';
 import { computed, inject } from '@angular/core';
 import { FundManagementService } from '../../../core/services/fund-management-service';
 import { tapResponse } from '@ngrx/operators';
+
 interface fundState {
   availableFunds: Fund[];
   isLoading: boolean;
@@ -63,6 +64,55 @@ export const FundStore = signalStore(
           return store.fundService.getUser().pipe(
             tapResponse({
               next: (user) => patchState(store, { user, isLoading: false }),
+              error: (err) => {
+                patchState(store, { isLoading: false });
+                console.error(err);
+              },
+            }),
+          );
+        }),
+      ),
+    ),
+    //fix this
+    subscribeFund: rxMethod<number>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap((fundId) => {
+          return store.fundService.subscribeFund(fundId).pipe(
+            tapResponse({
+              next: ({ subscribedFund, balance }) =>
+                patchState(store, (state) => ({
+                  user: {
+                    ...state.user!,
+                    balance,
+                    subscribedFunds: [...state.user!.subscribedFunds, subscribedFund],
+                  },
+                  isLoading: false,
+                })),
+              error: (err) => {
+                patchState(store, { isLoading: false });
+                console.error(err);
+              },
+            }),
+          );
+        }),
+      ),
+    ),
+    cancelFund: rxMethod<number>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap((fundId) => {
+          return store.fundService.cancelFund(fundId).pipe(
+            tapResponse({
+              next: ({ balance }) =>
+                patchState(store, (state) => ({
+                  user: {
+                    ...state.user!,
+                    balance,
+                    subscribedFunds: state.user!.subscribedFunds.filter((f) => f.id !== fundId),
+                  },
+                  isLoading: false,
+                })),
               error: (err) => {
                 patchState(store, { isLoading: false });
                 console.error(err);

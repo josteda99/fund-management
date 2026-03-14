@@ -1,6 +1,11 @@
 import { Injectable, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Fund, User } from '../../features/funds/interfaces/fund.interfaces';
+import {
+  Fund,
+  SubscribedFund,
+  SubscribedFundDto,
+  User,
+} from '../../features/funds/interfaces/fund.interfaces';
 import { FundTransaction } from '../../app';
 
 @Injectable({
@@ -37,7 +42,39 @@ export class FundManagementService {
     return of(this.user());
   }
 
-  public subscribeFund(fundId: number) {
-    //todo
+  //extend to difeerent amount
+  public subscribeFund(fundId: number): Observable<SubscribedFundDto> {
+    const fund = this.initialAvailableFund().find((f) => f.id === fundId);
+
+    if (!fund) throw new Error('Fund doesnt finded');
+    this.user.update((u) => ({
+      ...u,
+      balance: u.balance - fund.minAmount,
+      subscribedFunds: [...u.subscribedFunds, { ...fund, amount: fund.minAmount }],
+    }));
+
+    const newBalance = this.user().balance;
+    const subscribedFund: SubscribedFund = {
+      ...fund,
+      amount: fund.minAmount,
+    };
+
+    return of({ subscribedFund, balance: newBalance });
+  }
+
+  public cancelFund(fundId: number): Observable<{ balance: number }> {
+    const user = this.user();
+    const fundIndex = user.subscribedFunds.findIndex((f) => f.id === fundId);
+
+    if (fundIndex === -1) throw new Error('Fund not subscribed');
+
+    const fund = user.subscribedFunds[fundIndex];
+    this.user.update((u) => ({
+      ...u,
+      balance: u.balance + fund.amount,
+      subscribedFunds: u.subscribedFunds.filter((f) => f.id !== fundId),
+    }));
+
+    return of({ balance: this.user().balance });
   }
 }

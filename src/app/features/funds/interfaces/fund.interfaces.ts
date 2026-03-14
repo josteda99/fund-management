@@ -10,5 +10,14 @@ export interface User {
   email: string;
   phone: string;
   balance: number;
-  subscribedFunds: Fund[];
+  subscribedFunds: SubscribedFund[];
+}
+
+export interface SubscribedFund extends Fund {
+  amount: number;
+}
+
+export interface SubscribedFundDto {
+  subscribedFund: SubscribedFund;
+  balance: number;
 }

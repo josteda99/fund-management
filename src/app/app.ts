@@ -8,11 +8,15 @@ interface Fund {
   category: 'FPV' | 'FIC';
 }
 
+interface SubscribedFund extends Fund {
+  amount: number;
+}
+
 interface User {
   name: string;
   email: string;
   phone: string;
-  subscribedFunds: Fund[];
+  subscribedFunds: SubscribedFund[];
 }
 
 export interface FundTransaction {

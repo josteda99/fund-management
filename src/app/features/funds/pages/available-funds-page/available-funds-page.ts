@@ -13,9 +13,9 @@ import { FundTransactionType } from '../../../../app';
 export class AvailableFundsPage implements OnInit {
   private fundStore = inject(FundStore);
 
-  private selectedFund = this.fundStore.selectedFund;
   private user = this.fundStore.user;
 
+  public selectedFund = this.fundStore.selectedFund;
   public availableFunds = this.fundStore.availableFunds;
   public balance = this.fundStore.userBalance;
 
@@ -29,17 +29,22 @@ export class AvailableFundsPage implements OnInit {
     const user = this.user();
 
     if (!fund || !user) return;
+
+    const currentBalance = this.balance() ?? 0;
     if (user.subscribedFunds.some((f) => f.id === fund.id)) {
       alert(`You are already subscribed to ${fund.name}`);
       return;
     }
-    if (this.balance() ?? 0 < fund.minAmount) {
+
+    console.log(currentBalance, fund.minAmount);
+
+    if (currentBalance < fund.minAmount) {
       alert(`Not enough balance to subscribe to ${fund.name}`);
       return;
     }
-    // this.user.update((u) => ({ ...u, subscribedFunds: [...u.subscribedFunds, fund] }));
+    this.fundStore.subscribeFund(fund.id);
+    alert(`Subscribed to ${fund.name} successfully!`);
     // this.initialBalance.update((balance) => balance - fund.minAmount);
-    // alert(`Subscribed to ${fund.name} successfully!`);
     // this.addTransactionEntry(fund, FundTransactionType.SUBSCRIPTION);
   }
 
@@ -60,12 +65,7 @@ export class AvailableFundsPage implements OnInit {
   public cancelFund() {
     const fund = this.selectedFund();
     if (!fund) return;
-    // this.user.update((u) => ({
-    //   ...u,
-    //   subscribedFunds: [...u.subscribedFunds].filter((f) => f.id !== fund.id),
-    // }));
-
-    // this.addTransactionEntry(fund, FundTransactionType.CANCELLATION);
+    this.fundStore.cancelFund(fund.id);
   }
 
   public addTransactionEntry(fund: Fund, type: FundTransactionType) {
