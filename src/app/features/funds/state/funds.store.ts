@@ -12,6 +12,7 @@ import { pipe, switchMap, tap } from 'rxjs';
 import { computed, inject } from '@angular/core';
 import { FundManagementService } from '../../../core/services/fund-management-service';
 import { tapResponse } from '@ngrx/operators';
+import { MessageService } from '../../../core/services/message-service';
 
 interface fundState {
   availableFunds: Fund[];
@@ -34,6 +35,7 @@ export const FundStore = signalStore(
   })),
   withProps(() => ({
     fundService: inject(FundManagementService),
+    messageService: inject(MessageService),
   })),
   withMethods((store) => ({
     selectFund(fund: Fund): void {
@@ -81,15 +83,20 @@ export const FundStore = signalStore(
           return store.fundService.subscribeFund(fundId).pipe(
             tapResponse({
               next: ({ subscribedFund, balance }) =>
-                patchState(store, (state) => ({
-                  user: {
-                    ...state.user!,
-                    balance,
-                    subscribedFunds: [...state.user!.subscribedFunds, subscribedFund],
-                  },
-                  isLoading: false,
-                })),
+                patchState(store, (state) => {
+                  store.messageService.showMessage('Subscribe successfully', 'success');
+                  return {
+                    user: {
+                      ...state.user!,
+                      balance,
+                      subscribedFunds: [...state.user!.subscribedFunds, subscribedFund],
+                    },
+                    isLoading: false,
+                  };
+                }),
               error: (err) => {
+                store.messageService.showMessage('Subscribe failuree', 'danger');
+
                 patchState(store, { isLoading: false });
                 console.error(err);
               },
@@ -105,15 +112,21 @@ export const FundStore = signalStore(
           return store.fundService.cancelFund(fundId).pipe(
             tapResponse({
               next: ({ balance }) =>
-                patchState(store, (state) => ({
-                  user: {
-                    ...state.user!,
-                    balance,
-                    subscribedFunds: state.user!.subscribedFunds.filter((f) => f.id !== fundId),
-                  },
-                  isLoading: false,
-                })),
+                patchState(store, (state) => {
+                  store.messageService.showMessage('Cancel succesfully', 'success');
+
+                  return {
+                    user: {
+                      ...state.user!,
+                      balance,
+                      subscribedFunds: state.user!.subscribedFunds.filter((f) => f.id !== fundId),
+                    },
+                    isLoading: false,
+                  };
+                }),
               error: (err) => {
+                store.messageService.showMessage('Cancel failure', 'danger');
+
                 patchState(store, { isLoading: false });
                 console.error(err);
               },

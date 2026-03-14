@@ -1,0 +1,14 @@
+@if (messageService.isShowing()) {
+  <div
+    class="alert message"
+    [ngClass]="{
+      'alert-success': messageService.type() === 'success',
+      'alert-danger': messageService.type() === 'danger',
+      'alert-warning': messageService.type() === 'warning',
+      'alert-info': messageService.type() === 'info',
+    }"
+    role="alert"
+  >
+    {{ messageService.message() }}
+  </div>
+}

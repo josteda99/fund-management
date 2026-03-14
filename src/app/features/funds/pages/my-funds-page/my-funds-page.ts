@@ -2,11 +2,10 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { FundStore } from '../../state/funds.store';
 import { FundTransactionStore } from '../../../transactions/state/funds-transaction.store';
 import { CommonModule } from '@angular/common';
-import { FundCardComponent } from '../../../shared/components/fund-card/fund-card';
 
 @Component({
   selector: 'app-my-funds-page',
-  imports: [CommonModule, FundCardComponent],
+  imports: [CommonModule],
   templateUrl: './my-funds-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

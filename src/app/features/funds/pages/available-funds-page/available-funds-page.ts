@@ -1,3 +1,4 @@
+import { MessageService } from './../../../../core/services/message-service';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FundStore } from '../../state/funds.store';
 import { Fund, NotificationPreference } from '../../interfaces/fund.interfaces';
@@ -11,6 +12,7 @@ import { Fund, NotificationPreference } from '../../interfaces/fund.interfaces';
 })
 export class AvailableFundsPage implements OnInit {
   private fundStore = inject(FundStore);
+  private messageService = inject(MessageService);
 
   private user = this.fundStore.user;
 
@@ -32,16 +34,15 @@ export class AvailableFundsPage implements OnInit {
 
     const currentBalance = this.balance() ?? 0;
     if (user.subscribedFunds.some((f) => f.id === fund.id)) {
-      alert(`You are already subscribed to ${fund.name}`);
+      this.messageService.showMessage(`You are already subscribed to ${fund.name}`, 'danger');
       return;
     }
 
     if (currentBalance < fund.minAmount) {
-      alert(`Not enough balance to subscribe to ${fund.name}`);
+      this.messageService.showMessage(`Not enough balance to subscribe to ${fund.name}`, 'danger');
       return;
     }
     this.fundStore.subscribeFund(fund.id);
-    alert(`Subscribed to ${fund.name} successfully!`);
   }
 
   public selectFund(fund: Fund) {
