@@ -18,10 +18,8 @@ const initialState: FundsTransactionState = {
 
 export const FundTransactionStore = signalStore(
   withState(initialState),
-  withProps((store) => ({
+  withProps(() => ({
     fundService: inject(FundManagementService),
-    fundsTransaction: store.fundsTransaction,
-    isLoading: store.isLoading,
   })),
   withMethods((store) => ({
     getFundTransactions: rxMethod<void>(

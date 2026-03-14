@@ -2,11 +2,15 @@ import { Injectable, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {
   Fund,
+  NotificationPreference,
   SubscribedFund,
   SubscribedFundDto,
   User,
 } from '../../features/funds/interfaces/fund.interfaces';
-import { FundTransaction } from '../../app';
+import {
+  FundTransaction,
+  FundTransactionType,
+} from '../../features/transactions/interfaces/transaction.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -43,21 +47,26 @@ export class FundManagementService {
   }
 
   //extend to difeerent amount
-  public subscribeFund(fundId: number): Observable<SubscribedFundDto> {
+  public subscribeFund(
+    fundId: number,
+    notificationPreference = NotificationPreference.NONE,
+  ): Observable<SubscribedFundDto> {
     const fund = this.initialAvailableFund().find((f) => f.id === fundId);
 
     if (!fund) throw new Error('Fund doesnt finded');
-    this.user.update((u) => ({
-      ...u,
-      balance: u.balance - fund.minAmount,
-      subscribedFunds: [...u.subscribedFunds, { ...fund, amount: fund.minAmount }],
-    }));
-
-    const newBalance = this.user().balance;
     const subscribedFund: SubscribedFund = {
       ...fund,
       amount: fund.minAmount,
+      notificationPreference,
     };
+    this.user.update((u) => ({
+      ...u,
+      balance: u.balance - fund.minAmount,
+      subscribedFunds: [...u.subscribedFunds, subscribedFund],
+    }));
+
+    const newBalance = this.user().balance;
+    this.addTransactionEntry(fund, FundTransactionType.SUBSCRIPTION, fund.minAmount);
 
     return of({ subscribedFund, balance: newBalance });
   }
@@ -74,7 +83,20 @@ export class FundManagementService {
       balance: u.balance + fund.amount,
       subscribedFunds: u.subscribedFunds.filter((f) => f.id !== fundId),
     }));
+    this.addTransactionEntry(fund, FundTransactionType.CANCELLATION, fund.amount);
 
     return of({ balance: this.user().balance });
+  }
+
+  private addTransactionEntry(fund: Fund, type: FundTransactionType, amount: number) {
+    let id = this.transactions().length ?? 0;
+    const fundTransaction: FundTransaction = {
+      id: id++,
+      fundName: fund.name,
+      amount: amount,
+      transactionDate: new Date(),
+      type: type,
+    };
+    this.transactions.update((ft) => [...ft, fundTransaction]);
   }
 }

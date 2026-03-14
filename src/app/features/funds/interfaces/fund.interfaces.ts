@@ -15,9 +15,16 @@ export interface User {
 
 export interface SubscribedFund extends Fund {
   amount: number;
+  notificationPreference: NotificationPreference;
 }
 
 export interface SubscribedFundDto {
   subscribedFund: SubscribedFund;
   balance: number;
+}
+
+export enum NotificationPreference {
+  SMS = 'SMS',
+  EMAIL = 'EMAIL',
+  NONE = 'NONE',
 }

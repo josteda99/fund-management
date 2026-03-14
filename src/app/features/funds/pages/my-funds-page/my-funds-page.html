@@ -1,1 +1,17 @@
-<p>my-funds-page works!</p>,
+<div class="my-funds-page">
+  <h1>My Funds</h1>
+  <p *ngIf="isLoading()">Loading...</p>
+  <div *ngIf="user() as userData">
+    <p>Balance: {{ userData.balance | currency }}</p>
+    <div class="funds-list">
+      <app-fund-card
+        *ngFor="let fund of userData.subscribedFunds"
+        [fund]="fund"
+        [showCancel]="true"
+        (cancel)="cancelFund(fund.id)"
+      >
+      </app-fund-card>
+    </div>
+  </div>
+</div>
+,

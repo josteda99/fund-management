@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FundStore } from '../../state/funds.store';
-import { Fund } from '../../interfaces/fund.interfaces';
-import { FundTransactionType } from '../../../../app';
+import { Fund, NotificationPreference } from '../../interfaces/fund.interfaces';
 
 @Component({
   selector: 'app-available-funds-page',
@@ -18,6 +17,7 @@ export class AvailableFundsPage implements OnInit {
   public selectedFund = this.fundStore.selectedFund;
   public availableFunds = this.fundStore.availableFunds;
   public balance = this.fundStore.userBalance;
+  public notificationPreference = signal<NotificationPreference>(NotificationPreference.NONE);
 
   public ngOnInit(): void {
     this.fundStore.getInitialAvailableFunds();
@@ -36,16 +36,12 @@ export class AvailableFundsPage implements OnInit {
       return;
     }
 
-    console.log(currentBalance, fund.minAmount);
-
     if (currentBalance < fund.minAmount) {
       alert(`Not enough balance to subscribe to ${fund.name}`);
       return;
     }
     this.fundStore.subscribeFund(fund.id);
     alert(`Subscribed to ${fund.name} successfully!`);
-    // this.initialBalance.update((balance) => balance - fund.minAmount);
-    // this.addTransactionEntry(fund, FundTransactionType.SUBSCRIPTION);
   }
 
   public selectFund(fund: Fund) {
@@ -53,7 +49,15 @@ export class AvailableFundsPage implements OnInit {
   }
 
   public changeNotificationPreference(option: string) {
-    // this.notificationPreference.set(option);
+    if (option === NotificationPreference.EMAIL) {
+      this.notificationPreference.set(NotificationPreference.EMAIL);
+      return;
+    }
+    if (option === NotificationPreference.SMS) {
+      this.notificationPreference.set(NotificationPreference.SMS);
+      return;
+    }
+    this.notificationPreference.set(NotificationPreference.NONE);
   }
 
   public checkSubscription(fundId: number) {
@@ -66,17 +70,5 @@ export class AvailableFundsPage implements OnInit {
     const fund = this.selectedFund();
     if (!fund) return;
     this.fundStore.cancelFund(fund.id);
-  }
-
-  public addTransactionEntry(fund: Fund, type: FundTransactionType) {
-    // let id = this.fundTransactions().length ?? 0;
-    // const fundTransaction: FundTransaction = {
-    //   id: id++,
-    //   fundName: fund.name,
-    //   amount: 0, // fix
-    //   transactionDate: new Date(),
-    //   type: type,
-    // };
-    // this.fundTransactions.update((ft) => [...ft, fundTransaction]);
   }
 }
