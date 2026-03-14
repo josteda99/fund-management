@@ -30,7 +30,8 @@ export enum NotificationPreference {
   NONE = 'NONE',
 }
 
-export interface FundIdNotificationPreference {
+export interface SubscribeFundWithAmount {
   fundId: number;
   notificationPreference: NotificationPreference;
+  amount: number;
 }

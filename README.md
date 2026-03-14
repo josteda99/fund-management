@@ -17,7 +17,8 @@ to have in account:
 * form validators
 * responsive an clare
 * consume simualte api rest (json server????)
-* errors✅ - loading and feedfack✅
+* errors✅ - and feedfack✅
+* loading
 * clean code and comented 
 * unit testing
 * navigation✅

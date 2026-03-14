@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {
   Fund,
-  NotificationPreference,
+  SubscribeFundWithAmount,
   SubscribedFund,
   SubscribedFundDto,
   User,
@@ -48,14 +48,15 @@ export class FundManagementService {
 
   //extend to difeerent amount
   public subscribeFund(
-    fundId: number,
-    notificationPreference = NotificationPreference.NONE,
+    subscribeFundWithAmount: SubscribeFundWithAmount,
   ): Observable<SubscribedFundDto> {
+    const { fundId, notificationPreference, amount } = subscribeFundWithAmount;
+
     const fund = this.initialAvailableFund().find((f) => f.id === fundId);
 
     if (!fund) throw new Error('Fund doesnt finded');
     const returnRate = this.generateRandomReturnRate();
-    const adjustedAmount = Number((fund.minAmount * (1 + returnRate)).toFixed(2));
+    const adjustedAmount = Number((amount * (1 + returnRate)).toFixed(2));
 
     const subscribedFund: SubscribedFund = {
       ...fund,
@@ -66,7 +67,7 @@ export class FundManagementService {
     //take a look this logic
     this.user.update((u) => ({
       ...u,
-      balance: u.balance - fund.minAmount,
+      balance: u.balance - amount,
       subscribedFunds: [...u.subscribedFunds, subscribedFund],
     }));
 

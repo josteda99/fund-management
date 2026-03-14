@@ -29,7 +29,7 @@ export class AvailableFundsPage implements OnInit {
     this.fundStore.getUser();
   }
 
-  public subscribeFund() {
+  public subscribeFund(amount: number) {
     const fund = this.selectedFund();
     const user = this.user();
 
@@ -48,6 +48,7 @@ export class AvailableFundsPage implements OnInit {
     this.fundStore.subscribeFund({
       fundId: fund.id,
       notificationPreference: this.notificationPreference(),
+      amount: amount,
     });
   }
 

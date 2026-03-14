@@ -14,10 +14,26 @@
       </div>
       <div class="modal-body">
         <p>
-          You are subscribing to the fund: <strong>{{ fundName() }}</strong>
+          You are subscribing to the fund: <strong>{{ fund()?.name }}</strong>
         </p>
 
-        <h6>How would you like to receive notifications?</h6>
+        <p class="m-0">Introduce ammount - min amount: {{ fund()?.minAmount | currency: 'COP' }}</p>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input
+            type="number"
+            [(ngModel)]="amount"
+            class="form-control"
+            aria-label="Amount (to the nearest dollar)"
+          />
+        </div>
+        @if (errorMessage()) {
+          <p class="text-danger">{{ errorMessage() }}</p>
+        }
+
+        <h6 class="mt-3">How would you like to receive notifications?</h6>
 
         <button
           type="button"
@@ -53,6 +69,7 @@
           class="btn btn-primary"
           data-bs-dismiss="modal"
           (click)="onSubscribe()"
+          [disabled]="checkDisabled()"
         >
           Confirm Subscription
         </button>

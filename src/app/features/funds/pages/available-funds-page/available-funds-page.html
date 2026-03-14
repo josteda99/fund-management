@@ -46,10 +46,11 @@
 </div>
 
 <app-subscribe-dialog
-  [fundName]="selectedFund()?.name ?? ''"
+  [fund]="selectedFund()"
+  [userBalance]="balance() ?? 0"
   [notificationPreference]="notificationPreference()"
   (notificationPreferenceChange)="changeNotificationPreference($event)"
-  (subscribe)="subscribeFund()"
+  (subscribe)="subscribeFund($event)"
 ></app-subscribe-dialog>
 <app-cancel-dialog
   [fundName]="selectedFund()?.name ?? ''"

@@ -1,9 +1,0 @@
-<div class="fund-card">
-  <h3>{{ fund().name }}</h3>
-  <p>Category: {{ fund().category }}</p>
-  <p>Amount: {{ fund().amount | currency }}</p>
-  <p>Min Amount: {{ fund().minAmount | currency }}</p>
-  <p>Notification: {{ fund().notificationPreference }}</p>
-  <button *ngIf="showCancel()" (click)="cancel.emit(fund().id)">Cancel Fund</button>
-</div>
-,
