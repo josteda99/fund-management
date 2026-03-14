@@ -2,10 +2,11 @@ import { MessageService } from './../../../../core/services/message-service';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FundStore } from '../../state/funds.store';
 import { Fund, NotificationPreference } from '../../interfaces/fund.interfaces';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-available-funds-page',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './available-funds-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [FundStore],

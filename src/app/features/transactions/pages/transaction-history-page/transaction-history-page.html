@@ -1,4 +1,4 @@
-<h4>Fund transactions</h4>
+<h3>Fund transactions</h3>
 <table class="table">
   <thead>
     <tr>
@@ -14,8 +14,8 @@
       <tr>
         <td>{{ ft.id }}</td>
         <td>{{ ft.fundName }}</td>
-        <td>{{ ft.amount }}</td>
-        <td>{{ ft.transactionDate }}</td>
+        <td>{{ ft.amount | currency: 'COP' }}</td>
+        <td>{{ ft.transactionDate | date: 'dd/MM/yyyy hh:mm' }}</td>
         <td>{{ ft.type }}</td>
       </tr>
     } @empty {
