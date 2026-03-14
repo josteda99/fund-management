@@ -12,6 +12,11 @@ import {
   FundTransactionType,
 } from '../../features/transactions/interfaces/transaction.interface';
 
+/*
+this service simule api
+here every "request" has a delay with the purpose of show the loading
+*/
+
 @Injectable({
   providedIn: 'root',
 })

@@ -87,7 +87,7 @@ export const FundStore = signalStore(
             tapResponse({
               next: ({ subscribedFund, balance }) =>
                 patchState(store, (state) => {
-                  store.messageService.showMessage('Subscribe successfully', 'success');
+                  store.messageService.showMessage('Subscription successful', 'success');
                   return {
                     user: {
                       ...state.user!,
@@ -98,7 +98,7 @@ export const FundStore = signalStore(
                   };
                 }),
               error: (err) => {
-                store.messageService.showMessage('Subscribe failuree', 'danger');
+                store.messageService.showMessage('Subscription failed', 'danger');
 
                 patchState(store, { isLoading: false });
                 console.error(err);
@@ -116,7 +116,7 @@ export const FundStore = signalStore(
             tapResponse({
               next: ({ balance }) =>
                 patchState(store, (state) => {
-                  store.messageService.showMessage('Cancel succesfully', 'success');
+                  store.messageService.showMessage('Cancellation successful', 'success');
 
                   return {
                     user: {
@@ -128,7 +128,7 @@ export const FundStore = signalStore(
                   };
                 }),
               error: (err) => {
-                store.messageService.showMessage('Cancel failure', 'danger');
+                store.messageService.showMessage('Cancellation failed', 'danger');
 
                 patchState(store, { isLoading: false });
                 console.error(err);

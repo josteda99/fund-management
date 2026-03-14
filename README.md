@@ -6,10 +6,6 @@ Requirements:
 * cancel participation and check new balance ✅
 * watch a list or table transaction history (subs and cancels)✅
 * show proper errors if no enoght funds✅
-* simulate fund movements (innesesary)
-* save in fake DB (localStorage)
-
-
 
 to have in account:
 
@@ -17,14 +13,13 @@ to have in account:
 * state✅
 * form validators ✅
 * responsive an clare ✅
-* consume simualte api rest (json server????)
 * errors✅ - and feedfack✅
 * loading✅
 * clean code and comented 
 * unit testing
 * navigation✅
 * components✅
-* internationalization
+* internationalization🤔
 
 
 to send:
