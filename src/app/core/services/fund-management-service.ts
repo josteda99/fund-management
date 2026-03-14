@@ -100,7 +100,7 @@ export class FundManagementService {
   }
 
   private addTransactionEntry(fund: Fund, type: FundTransactionType, amount: number) {
-    const length = this.transactions().length++;
+    const length = this.transactions().length ?? 0;
     const fundTransaction: FundTransaction = {
       id: length + 1,
       fundName: fund.name,
