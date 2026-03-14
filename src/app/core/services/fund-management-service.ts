@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import {
   Fund,
   SubscribeFundWithAmount,
@@ -35,18 +35,13 @@ export class FundManagementService {
   private transactions = signal<FundTransaction[]>([]);
 
   public getInitialAvailableFunds(): Observable<Fund[]> {
-    return of(this.initialAvailableFund());
-  }
-
-  public getFundTransactions(): Observable<FundTransaction[]> {
-    return of(this.transactions());
+    return of(this.initialAvailableFund()).pipe(delay(1000));
   }
 
   public getUser(): Observable<User> {
-    return of(this.user());
+    return of(this.user()).pipe(delay(1000));
   }
 
-  //extend to difeerent amount
   public subscribeFund(
     subscribeFundWithAmount: SubscribeFundWithAmount,
   ): Observable<SubscribedFundDto> {
@@ -64,7 +59,6 @@ export class FundManagementService {
       notificationPreference,
       returnRate: returnRate,
     };
-    //take a look this logic
     this.user.update((u) => ({
       ...u,
       balance: u.balance - amount,
@@ -74,7 +68,7 @@ export class FundManagementService {
     const newBalance = this.user().balance;
     this.addTransactionEntry(fund, FundTransactionType.SUBSCRIPTION, fund.minAmount);
 
-    return of({ subscribedFund, balance: newBalance });
+    return of({ subscribedFund, balance: newBalance }).pipe(delay(1000));
   }
 
   public cancelFund(fundId: number): Observable<{ balance: number }> {
@@ -91,7 +85,11 @@ export class FundManagementService {
     }));
     this.addTransactionEntry(fund, FundTransactionType.CANCELLATION, fund.amount);
 
-    return of({ balance: this.user().balance });
+    return of({ balance: this.user().balance }).pipe(delay(1000));
+  }
+
+  public getFundTransactions(): Observable<FundTransaction[]> {
+    return of(this.transactions());
   }
 
   private addTransactionEntry(fund: Fund, type: FundTransactionType, amount: number) {

@@ -22,6 +22,7 @@ export class AvailableFundsPage implements OnInit {
   public selectedFund = this.fundStore.selectedFund;
   public availableFunds = this.fundStore.availableFunds;
   public balance = this.fundStore.userBalance;
+  public isLoading = this.fundStore.isLoading;
   public notificationPreference = signal<NotificationPreference>(NotificationPreference.NONE);
 
   public ngOnInit(): void {

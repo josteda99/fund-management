@@ -57,6 +57,23 @@
       </div>
     </div>
   </div>
+} @else {
+  @if (isLoading()) {
+    <div class="card">
+      <div class="card-body">
+        <h4 class="mb-3">Hello, ...</h4>
+
+        <div class="mb-3">
+          <h5>Total Balance: {{ 0 | currency: 'COP' }}</h5>
+          <p class="m-0">Available Balance: {{ 0 | currency: 'COP' }}</p>
+          <p class="m-0">Invested Amount: {{ 0 | currency: 'COP' }}</p>
+        </div>
+        <div class="spinner-border mx-3" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+  }
 }
 
 <app-cancel-dialog

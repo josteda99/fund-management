@@ -18,6 +18,7 @@ export class DashboardPage implements OnInit {
   public investedAmount = this.fundStore.investedAmount;
   public subscribedFunds = this.fundStore.subscribedFunds;
   public selectedFund = this.fundStore.selectedFund;
+  public isLoading = this.fundStore.isLoading;
 
   public totalAmount = computed(() => {
     const userBalance = this.user()?.balance ?? 0;
