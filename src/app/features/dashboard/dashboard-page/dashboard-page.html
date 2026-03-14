@@ -1,1 +1,12 @@
-<p>dashboard-page works!</p>,
+@if (user()) {
+  <div class="card">
+    <div class="card-body">
+      <h4>Hello, {{ user()?.name }}</h4>
+      <h5>Total Balance: {{ totalAmount() | currency: 'COP' }}</h5>
+      <p class="m-0">Available Balance: {{ user()?.balance | currency: 'COP' }}</p>
+      <p>Invested Amount: {{ investedAmount() | currency: 'COP' }}</p>
+
+      <!-- reuse table -->
+    </div>
+  </div>
+}

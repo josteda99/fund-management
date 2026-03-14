@@ -1,12 +1,14 @@
 import { MessageService } from './../../../../core/services/message-service';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { FundStore } from '../../state/funds.store';
+import { FundStore } from '../../state/fund.store';
 import { Fund, NotificationPreference } from '../../interfaces/fund.interfaces';
 import { CommonModule } from '@angular/common';
+import { CancelDialog } from '../../../../shared/components/cancel-dialog/cancel-dialog';
+import { SubscribeDialog } from '../../../../shared/components/subscribe-dialog/subscribe-dialog';
 
 @Component({
   selector: 'app-available-funds-page',
-  imports: [CommonModule],
+  imports: [CommonModule, CancelDialog, SubscribeDialog],
   templateUrl: './available-funds-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [FundStore],
@@ -27,7 +29,7 @@ export class AvailableFundsPage implements OnInit {
     this.fundStore.getUser();
   }
 
-  public subscribeToFund() {
+  public subscribeFund() {
     const fund = this.selectedFund();
     const user = this.user();
 

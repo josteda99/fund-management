@@ -6,7 +6,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { Fund, User } from './../interfaces/fund.interfaces';
+import { Fund, User } from '../interfaces/fund.interfaces';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
 import { computed, inject } from '@angular/core';
@@ -32,6 +32,9 @@ export const FundStore = signalStore(
   withState(initialState),
   withComputed(({ user }) => ({
     userBalance: computed(() => user()?.balance),
+    investedAmount: computed(() =>
+      user()?.subscribedFunds.reduce((acc, fund) => (acc += fund.amount), 0),
+    ),
   })),
   withProps(() => ({
     fundService: inject(FundManagementService),

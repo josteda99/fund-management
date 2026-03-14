@@ -10,17 +10,18 @@ Requirements:
 * save in fake DB (localStorage)
 
 
+
 to have in account:
 * angular✅
-* state
+* state✅
 * form validators
 * responsive an clare
 * consume simualte api rest (json server????)
-* errors - loading and feedfack
+* errors✅ - loading and feedfack✅
 * clean code and comented 
 * unit testing
-* navigation
-* components
+* navigation✅
+* components✅
 * internationalization
 
 
