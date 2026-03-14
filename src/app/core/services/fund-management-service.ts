@@ -54,7 +54,7 @@ export class FundManagementService {
 
     const fund = this.initialAvailableFund().find((f) => f.id === fundId);
 
-    if (!fund) throw new Error('Fund doesnt finded');
+    if (!fund) throw new Error('Fund doesnt found');
     const returnRate = this.generateRandomReturnRate();
     const adjustedAmount = Number((amount * (1 + returnRate)).toFixed(2));
 
@@ -64,6 +64,7 @@ export class FundManagementService {
       notificationPreference,
       returnRate: returnRate,
     };
+
     this.user.update((u) => ({
       ...u,
       balance: u.balance - amount,
@@ -88,6 +89,7 @@ export class FundManagementService {
       balance: u.balance + fund.amount,
       subscribedFunds: u.subscribedFunds.filter((f) => f.id !== fundId),
     }));
+
     this.addTransactionEntry(fund, FundTransactionType.CANCELLATION, fund.amount);
 
     return of({ balance: this.user().balance }).pipe(delay(1000));
