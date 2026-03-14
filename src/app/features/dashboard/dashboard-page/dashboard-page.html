@@ -58,7 +58,12 @@
               </tr>
             } @empty {
               <tr>
-                <td colspan="6" class="text-center">No funds yet</td>
+                <td colspan="6" class="text-center">
+                  No funds yet
+                  <button type="button" class="btn btn-link" routerLink="/available-funds">
+                    Check available funds
+                  </button>
+                </td>
               </tr>
             }
           </tbody>
